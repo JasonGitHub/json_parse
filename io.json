@@ -1,0 +1,106 @@
+{
+  "input": [
+    {
+      "name": "Logical Name",
+      "_comment": "This relation has 2 partitions",
+      "data": [
+        {
+          "part0": "foo_0.csv"
+        },
+        {
+          "part1": "foo_1.csv"
+        }
+      ],
+      "columns": [
+        {
+          "type": "ub4",
+          "name": "Key Column 1"
+        },
+        {
+          "type": "ub4",
+          "name": "Key Column 2"
+        },
+        {
+          "type": "ub4",
+          "name": "Value Column 1"
+        },
+        {
+          "type": "ub4",
+          "name": "Value Column 2"
+        }
+      ],
+      "create_hash:": {
+        "_comment": "additional column will be created on read. This will be the crc32 hash of columns 2 and 0. Current assumption is that only one hash column can be created and it will be last column",
+        "keyidx": 2,
+        "keyidx": 0
+      }
+    },
+    {
+      "name": "Some Other Logical Name",
+      "_comment": "This relation has 1 partition",
+      "data": [
+        {
+          "part": "bar.csv"
+        }
+      ],
+      "columns": [
+        {
+          "type": "ub1",
+          "name": "Logical Name for Column 1"
+        },
+        {
+          "type": "ub4",
+          "name": "Logical Name for Column 2"
+        }
+      ]
+    }
+  ],
+  "output": [
+    {
+      "name": "Output Name",
+      "data": [
+        {
+          "part0": "dump1.csv"
+        }
+      ],
+      "num_rows": 10,
+      "columns": [
+        {
+          "type": "ub1",
+          "name": "Logical Name for Column 1"
+        },
+        {
+          "type": "ub4",
+          "name": "Logical Name for Column 2"
+        },
+        {
+          "type": "nmbv",
+          "name": "Bit Vector that will NOT be materialized"
+        },
+        {
+          "type": "mbv",
+          "name": "Bit Vector that WILL  be materialized"
+        }
+      ]
+    },
+    {
+      "name": "Some Other Output Name",
+      "data": [
+        {
+          "part0": "dump2.csv"
+        }
+      ],
+      "_comment": "Absence of num_rows means this is streamed, not buffered",
+      "columns": [
+        {
+          "type": "sb4",
+          "name": "Logical Name for Column 1"
+        },
+        {
+          "type": "ub4",
+          "name": "Logical Name for Column 2"
+        }
+      ]
+    }
+  ]
+}
