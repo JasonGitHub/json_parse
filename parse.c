@@ -33,7 +33,7 @@ bool read_input_schema(json_t *root) {
     }
     name_text = json_string_value(name);
     //FIXME: Optest value assignment plugin here
-    printf("name: %s\n", name_text);
+    printf("relation name: %s\n", name_text);
 
     data = json_object_get(relation, "data");
     if (!json_is_array(data)) {
@@ -41,21 +41,17 @@ bool read_input_schema(json_t *root) {
       json_decref(root);
       return false;
     }
-    const char *key;
-    json_t *value;
     for (j = 0; j < json_array_size(data); ++j) {
       json_t *data_part;
       data_part = json_array_get(data, j);
-      json_object_foreach(data_part, key, value) {
-        if (!json_is_string(value)) {
-          fprintf(stderr, "error: name of part %d is not a string\n", i);
-          json_decref(root);
-          return false;
-        }
-        const char *value_text = json_string_value(value);
-        //FIXME: Optest value assignment plugin here
-        printf("%s : %s\n", key, value_text); 
+      if (!json_is_string(data_part)) {
+        fprintf(stderr, "error: name of part %d is not a string\n", i);
+        json_decref(root);
+        return false;
       }
+      const char *data_part_text = json_string_value(data_part);
+      //FIXME: Optest value assignment plugin here
+      printf("input file name: %s\n", data_part_text); 
     }
 
     columns = json_object_get(relation, "columns");
@@ -64,6 +60,8 @@ bool read_input_schema(json_t *root) {
       json_decref(root);
       return false;
     }
+    const char *key;
+    json_t *value;
     for (j = 0; j < json_array_size(columns); ++j) {
       json_t *one_column;
       one_column = json_array_get(columns, j);
@@ -114,7 +112,7 @@ bool read_output_schema(json_t *root) {
     }
     name_text = json_string_value(name);
     //FIXME: Optest value assignment plugin here
-    printf("name: %s\n", name_text);
+    printf("relation name: %s\n", name_text);
 
     data = json_object_get(relation, "data");
     if (!json_is_array(data)) {
@@ -122,31 +120,31 @@ bool read_output_schema(json_t *root) {
       json_decref(root);
       return false;
     }
-    const char *key;
-    json_t *value;
     for (j = 0; j < json_array_size(data); ++j) {
       json_t *data_part;
       data_part = json_array_get(data, j);
-      json_object_foreach(data_part, key, value) {
-        if (!json_is_string(value)) {
-          fprintf(stderr, "error: name of part %d is not a string\n", i);
-          json_decref(root);
-          return false;
-        }
-        const char *value_text = json_string_value(value);
-        //FIXME: Optest value assignment plugin here
-        printf("%s : %s\n", key, value_text); 
+      if (!json_is_string(data_part)) {
+        fprintf(stderr, "error: name of part %d is not a string\n", i);
+        json_decref(root);
+        return false;
       }
+      const char *data_part_text = json_string_value(data_part);
+      //FIXME: Optest value assignment plugin here
+      printf("input file name: %s\n", data_part_text); 
     }
 
+    // check if num_rows is set
+    // if yes, it is buffered; otherwise it's streamed
     num_rows = json_object_get(relation, "num_rows");
-    if (!json_is_integer(num_rows)) {
-      fprintf(stderr, "error: num_rows of relation %d is not an integer\n", i);
-      json_decref(root);
-      return false;
+    if (num_rows != NULL) {
+      if (!json_is_integer(num_rows)) {
+        fprintf(stderr, "error: num_rows of relation %d is not an integer\n", i);
+        json_decref(root);
+        return false;
+      }
+      int num_rows_val = json_integer_value(num_rows);
+      printf("num_rows: %d\n", num_rows_val);
     }
-    int num_rows_val = json_integer_value(num_rows);
-    printf("num_rows: %d\n", num_rows_val);
 
     columns = json_object_get(relation, "columns");
     if (!json_is_array(columns)) {
@@ -154,6 +152,8 @@ bool read_output_schema(json_t *root) {
       json_decref(root);
       return false;
     }
+    const char *key;
+    json_t *value;
     for (j = 0; j < json_array_size(columns); ++j) {
       json_t *one_column;
       one_column = json_array_get(columns, j);

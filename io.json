@@ -3,14 +3,7 @@
     {
       "name": "Logical Name",
       "_comment": "This relation has 2 partitions",
-      "data": [
-        {
-          "part0": "foo_0.csv"
-        },
-        {
-          "part1": "foo_1.csv"
-        }
-      ],
+      "data": ["foo_0.csv", "foo_1.csv"],
       "columns": [
         {
           "type": "ub4",
@@ -38,11 +31,7 @@
     {
       "name": "Some Other Logical Name",
       "_comment": "This relation has 1 partition",
-      "data": [
-        {
-          "part": "bar.csv"
-        }
-      ],
+      "data": ["bar.csv"],
       "columns": [
         {
           "type": "ub1",
@@ -58,11 +47,7 @@
   "output": [
     {
       "name": "Output Name",
-      "data": [
-        {
-          "part0": "dump1.csv"
-        }
-      ],
+      "data": ["dump1.csv"],
       "num_rows": 10,
       "columns": [
         {
@@ -85,11 +70,7 @@
     },
     {
       "name": "Some Other Output Name",
-      "data": [
-        {
-          "part0": "dump2.csv"
-        }
-      ],
+      "data": ["dump2.csv"],
       "_comment": "Absence of num_rows means this is streamed, not buffered",
       "columns": [
         {
