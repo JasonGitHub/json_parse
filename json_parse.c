@@ -77,8 +77,8 @@ bool read_input_schema(json_t *root) {
       }
     }
 
-    create_hash = json_object_get(create_hash, "create_hash");
     //TODO: parse create_hash
+    // create_hash = json_object_get(create_hash, "create_hash");
   }
   return true;
 }
@@ -188,7 +188,9 @@ bool read_schema(const char *json_file_name) {
     return false;
   }
   // fetch "input" & "output"
-  return read_input_schema(root) && read_output_schema(root);
+  bool status = read_input_schema(root) && read_output_schema(root);
+  json_decref(root);
+  return status;
 }
 
 int main() {

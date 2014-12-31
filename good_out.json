@@ -1,0 +1,35 @@
+relation name: Logical Name
+input file name: foo_0.csv
+input file name: foo_1.csv
+type : ub4
+name : Key Column 1
+type : ub4
+name : Key Column 2
+type : ub4
+name : Value Column 1
+type : ub4
+name : Value Column 2
+relation name: Some Other Logical Name
+input file name: bar.csv
+type : ub1
+name : Logical Name for Column 1
+type : ub4
+name : Logical Name for Column 2
+relation name: Output Name
+input file name: dump1.csv
+num_rows: 10
+type : ub1
+name : Logical Name for Column 1
+type : ub4
+name : Logical Name for Column 2
+type : nmbv
+name : Bit Vector that will NOT be materialized
+type : mbv
+name : Bit Vector that WILL  be materialized
+relation name: Some Other Output Name
+input file name: dump2.csv
+type : sb4
+name : Logical Name for Column 1
+type : ub4
+name : Logical Name for Column 2
+Successfully read json configuration file
